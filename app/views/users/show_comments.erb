@@ -1,0 +1,5 @@
+<h5> All your posts: <h5>
+<% current_user.comments.each do |comment| %>
+  <p><a  href="/posts/<%=comment.post_id%>"> <%=comment.text %> </a></p>
+<% end %>
+

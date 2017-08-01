@@ -9,16 +9,17 @@ post "/users" do
     redirect "/posts"
   else
     @errors = user.errors.full_messages
+    erb :"/users/register"
   end
 
 end
 
 get "/users/:id/posts" do
-  "all of 1 users posts"
+  erb :"/users/show_posts"
 end
 
 get "/users/:id/comments" do
-  "all of 1 users comments"
+  erb :"/users/show_comments"
 end
 
 delete "/user/:id" do
@@ -30,9 +31,16 @@ get "/login" do
 end
 
 post "/login" do
-  "starts a session"
+  user = User.find_by(username: params[:username])
+  if user && user.authenticate(params[:password])
+    session[:user_id] = user.id
+    redirect "/posts"
+  else
+    @errors = ["something went wrong. So wrong!"]
+  end
 end
 
 get "/logout" do
-  "clears user sesh"
+  session.clear
+  redirect "/posts"
 end

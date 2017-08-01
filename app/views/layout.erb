@@ -25,10 +25,17 @@
     <div class="nav-wrapper">
       <a href="/" class="brand-logo">Schmacker News</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <% if logged_in? %>
+        <li><a href="/logout">Log Out</a></li>
+        <li><a href="/users/<%=current_user.id%>/posts">Your Posts</a></li>
+        <li><a href="/users/<%=current_user.id%>/comments">Your Comments</a></li>
+        <li><a href="/posts/new">Add Post</a></li>
+
+        <% else %>
         <li><a href="/users/new">Sign Up</a></li>
         <li><a href="/login">Log in</a></li>
-        <li><a href="/logout">Log Out</a></li>
-        <li><a href="/posts/new">Add Post</a></li>
+        <% end %>
+
       </ul>
     </div>
   </nav>

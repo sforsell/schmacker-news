@@ -8,15 +8,24 @@ get "/posts" do
 end
 
 get "/posts/new" do
+  require_user
   erb :"/posts/new"
 end
 
-post "/posts/new" do
-  "add post do db"
+post "/posts" do
+  post = Post.new(user: current_user, title: params[:title], body: params[:body])
+  if post.save
+    redirect "/posts"
+  else
+    @errors = user.errors.full_messages
+    erb :"/posts/new"
+  end
 end
 
 get "/posts/:id" do
-  "show one post with all its comments + have form to add comment"
+  @post = Post.find_by(id: params[:id])
+  erb :"/posts/show"
+
 end
 
 delete "/post/:id" do
