@@ -6,6 +6,15 @@
       <span class="white-text"><%= @post.body %> </span>
       <br>
       <p class="right-align white-text"> - <%= @post.user.username %> </p>
+      <% if @post.user == current_user %>
+      <br>
+      <a class="right-align btn-flat" href="/posts/<%=@post.id%>/edit">Edit</a>
+      <form class="right-align col s3 " action="/posts/<%=@post.id%>" method="post">
+        <input type="hidden" name="_method" value="delete" />
+        <button class="btn-flat" type="submit" name="action">delete</button>
+
+      </form>
+      <% end %>
 
     </div>
   </div>
@@ -22,10 +31,10 @@
       <p class="right-align grey-text text-lighten-1"> - <%= comment.user.username %> </p>
       <% if comment.user == current_user %>
       <br>
-      <a class="right-align waves-effect waves-teal btn-flat" href="/posts/<%=@post.id%>/comments/<%=comment.id%>/edit">Edit</a>
+      <a class="right-align btn-flat" href="/posts/<%=@post.id%>/comments/<%=comment.id%>/edit">Edit</a>
       <form class="right-align col s3 " action="/posts/<%=@post.id%>/comments/<%=comment.id%>" method="post">
         <input type="hidden" name="_method" value="delete" />
-        <button class=" waves-effect waves-teal btn-flat" type="submit" name="action">delete/</button>
+        <button class="btn-flat" type="submit" name="action">delete/</button>
 
       </form>
       <% end %>

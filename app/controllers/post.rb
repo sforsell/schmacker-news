@@ -22,16 +22,39 @@ post "/posts" do
   end
 end
 
+get "/posts/:id/edit" do
+  require_user
+  @post = Post.find_by(id: params[:id])
+  if @post.user == current_user
+    erb :"/posts/edit"
+  else
+    redirect "/posts"
+  end
+end
+
 get "/posts/:id" do
   @post = Post.find_by(id: params[:id])
   erb :"/posts/show"
 
 end
 
-delete "/post/:id" do
-  "remove post from db"
+delete "/posts/:id" do
+  post = Post.find_by(id: params[:id])
+  if post.user == current_user
+    post.destroy
+  end
+  redirect "/posts"
 end
 
-put "/post/:id" do
-  "update post"
+put "/posts/:id" do
+  post = Post.find_by(id: params[:id])
+  post.title = params[:title]
+  post.body = params[:body]
+
+  if post.user == current_user && post.save
+    redirect "/posts/#{post.id}"
+  else
+    @errors = post.errors.full_messages
+    erb :"/posts/edit"
+  end
 end

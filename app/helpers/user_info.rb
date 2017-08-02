@@ -10,4 +10,6 @@ def require_user
   redirect "/login" unless logged_in?
 end
 
-
+def authorized?(user)
+  user == current_user
+end

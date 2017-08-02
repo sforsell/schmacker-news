@@ -10,7 +10,11 @@ end
 get "/posts/:post_id/comments/:comment_id/edit" do
   require_user
   @comment = Comment.find_by(id: params[:comment_id])
-  erb :"/comments/edit"
+  if @comment.user == current_user
+    erb :"/comments/edit"
+  else
+    redirect "/posts"
+  end
 end
 
 put "/posts/:post_id/comments/:id" do
@@ -18,7 +22,7 @@ put "/posts/:post_id/comments/:id" do
   comment = Comment.find_by(id: params[:id])
   comment.text = params[:text]
 
-  if comment.save
+  if comment.user == current_user && comment.save
     redirect "/posts/#{params[:post_id]}"
   else
     @errors = comment.errors.full_messages
@@ -28,7 +32,12 @@ put "/posts/:post_id/comments/:id" do
 end
 
 delete "/posts/:post_id/comments/:id" do
-  Comment.find_by(id: params[:id]).destroy
-  redirect "/posts/#{params[:post_id]}"
+  comment = Comment.find_by(id: params[:id])
+  if comment.user == current_user
+    comment.destroy
+    redirect "/posts/#{params[:post_id]}"
+  else
+    redirect "/posts"
+  end
 end
 
