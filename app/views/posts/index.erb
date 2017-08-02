@@ -1,0 +1,3 @@
+<% @posts.each do |post| %>
+  <p><a href="posts/<%=post.id%>" ><%= post.title %> </a> <span class="user-name">- <%= post.user.username %></span></p>
+<% end %>

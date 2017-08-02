@@ -1,0 +1,16 @@
+<h5> Edit comment </h5>
+
+<%= erb :"/partials/_errors", layout: false %>
+
+<form class="col s12 m6" method="post" action="/posts/<%=@comment.post_id%>/comments/<%=@comment.id%>">
+  <div class="row">
+    <div class="input-field col s12 m6">
+      <input type="hidden" name="_method" value="put"/>
+      <textarea id="textarea1" name="text" class="materialize-textarea" ><%= @comment.text %></textarea>
+      <label for="text">Comment</label>
+    </div>
+  </div>
+
+  <button class="btn waves-effect waves-light" type="submit" name="action">Update Comment</button>
+
+</form>

@@ -1,0 +1,22 @@
+<h5> Edit Post </h5>
+
+<%= erb :"/partials/_errors", layout: false %>
+
+<form class="col s12 m6" method="post" action="/posts/<%=@post.id%>">
+  <div class="row">
+    <div class="input-field col s12 m6">
+      <input type="hidden" name="_method" value="put"/>
+      <label for="text">Title</label>
+      <input name="title" type="text" value="<%= @post.title %>" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12 m6">
+      <textarea id="textarea1" name="body" class="materialize-textarea" ><%= @post.body %></textarea>
+      <label for="text">Post text</label>
+    </div>
+  </div>
+
+  <button class="btn waves-effect waves-light" type="submit" name="action">Update Comment</button>
+
+</form>
